@@ -1,0 +1,48 @@
+.about-project__description {
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  padding: 0;
+}
+.about-project__subtitle {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+}
+.about-project__text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.about-project__duration {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  margin: 0 0 30px;
+}
+.about-project__duration-text {
+  color: #a0a0a0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  padding: 10px 0;
+  margin: 0 0 14px;
+}
+.about-project__duration_stage_one {
+  width: 20%;
+}
+
+.about-project__duration_stage_two {
+  width: 80%;
+}
+.about-project__text_stage_one {
+  background-color: #2be080;
+  color: #000;
+  font-weight: 400;
+}
+.about-project__text_stage_two {
+  background-color: #f2f2f2;
+  color: #000;
+  font-weight: 400;
+}
