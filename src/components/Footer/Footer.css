@@ -1,13 +1,13 @@
 .footer {
+  display: flex;
   width: 100%;
   background-color: #fafafa;
   font-size: 13px;
   font-weight: 400;
   line-height: 1.2;
   min-height: 172px;
-}
-
-.footer__content {
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .footer__wrap {
@@ -15,6 +15,7 @@
   border-top: solid 1px #e8e8e8;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
 }
 
 .footer__title {

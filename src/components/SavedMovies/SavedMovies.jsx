@@ -1,9 +1,9 @@
+import SearchForm from "../SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import SearchForm from "../SearchForm/SearchForm";
 
-function Movies() {
+function SavedMovies() {
   return (
     <>
       <Header />
@@ -14,4 +14,4 @@ function Movies() {
   );
 }
 
-export default Movies;
+export default SavedMovies;

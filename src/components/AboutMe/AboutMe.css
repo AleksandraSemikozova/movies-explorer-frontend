@@ -2,8 +2,9 @@
   margin: 50px 0 100px;
   display: grid;
   grid-template-areas: "description image";
-  justify-content: space-between;
-  grid-column-gap: 50px;
+  grid-template-columns: 1fr 0.85fr;
+  justify-items: end;
+  grid-column-gap: 30px;
 }
 
 .about-me__description {
@@ -49,8 +50,10 @@
 
 .about-me__photo {
   grid-area: image;
-  max-width: 292px;
-  max-height: 352px;
+  width: 270px;
+  height: 327px;
+  object-fit: cover;
+  object-position: left top;
   border-radius: 10px;
 }
 
@@ -62,7 +65,7 @@
       "image"
       "description";
     justify-items: center;
-    grid-column-gap: 50px;
+    grid-template-columns: 1fr;
   }
 
   .about-me__description {

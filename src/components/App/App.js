@@ -3,38 +3,37 @@ import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Profile from "../Profile/Profile";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
 import Footer from "../Footer/Footer";
+import NotFound from "../NotFound/NotFound";
 
 function App() {
   return (
     <div className="page">
       <Switch>
-        <Route path="/" exact>
+        <Route exact path="/">
           <Header />
           <Main />
           <Footer />
         </Route>
-        <Route path="/movies" exact>
+        <Route exact path="/movies">
           <Movies />
         </Route>
-        {/* <Route path="/saved-movies" exact>
-          <Header />
-          <Movies />
-          <Footer />
+        <Route exact path="/saved-movies">
+          <SavedMovies />
         </Route>
-        <Route path="/profile" exact>
-          <Header />
+        <Route exact path="/profile">
           <Profile />
         </Route>
-        <Route path="/signin" exact>
+        <Route exact path="/signin">
           <Login />
         </Route>
-        <Route path="/signup" exact>
+        <Route exact path="/signup">
           <Register />
         </Route>
-        <Route path="*" exact>
-          <NotFound />
-        </Route> */}
       </Switch>
     </div>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../../images/logo.svg";
 import "./Header.css";
 import Navigation from "../Navigation/Navigation";
+import MobileMenu from "../MobileMenu/MobileMenu";
 import { Link, useLocation } from "react-router-dom";
 
 function Header() {
@@ -23,15 +24,19 @@ function Header() {
           </Link>
           {pathname === "/" ? "" : <Navigation />}
         </div>
+
         <div
           className={`header__wrapper ${
             pathname === "/" ? "" : "header__wrapper_burger"
-          }`}
-        >
+          }`}></div>
+
+        <div
+          className={`header__wrapper ${
+            pathname === "/" ? "" : "header__wrapper_burger"
+          }`}>
           <Link
             className="header__sign-text"
-            to={`${pathname === "/" ? "/signup" : "/profile"}`}
-          >
+            to={`${pathname === "/" ? "/signup" : "/profile"}`}>
             {text}
           </Link>
           {pathname === "/" ? (
@@ -50,8 +55,7 @@ function Header() {
               className={`header__burger ${
                 activeBurger ? "header__burger_active" : ""
               }`}
-              onClick={handleActiveBurger}
-            >
+              onClick={handleActiveBurger}>
               <div className="header__burger-line" />
               <div className="header__burger-line" />
               <div className="header__burger-line" />
@@ -60,8 +64,7 @@ function Header() {
               className={`header__burger-menu-wrap ${
                 activeBurger ? "header__burger-menu-wrap_active" : ""
               }`}
-              onClick={handleActiveBurger}
-            >
+              onClick={handleActiveBurger}>
               <nav className="header__burger-nav">
                 <ul className="header__burger-list">
                   <li className="header__burger-item">
@@ -84,20 +87,17 @@ function Header() {
               <div
                 className={`header__wrapper header__wrapper_burger-menu ${
                   pathname === "/" ? "header__wrapper_burger" : ""
-                }`}
-              >
+                }`}>
                 <Link
                   className="header__sign-text"
-                  to={`${pathname === "/" ? "/signup" : "/profile"}`}
-                >
+                  to={`${pathname === "/" ? "/signup" : "/profile"}`}>
                   {text}
                 </Link>
                 {pathname === "/" ? (
                   <Link
                     to="/signin"
                     className="header__btn-signin"
-                    type="button"
-                  >
+                    type="button">
                     Войти
                   </Link>
                 ) : (

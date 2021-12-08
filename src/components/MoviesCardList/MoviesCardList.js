@@ -3,7 +3,7 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { movies } from "../../utils/constants";
 
-function MoviesCardList(props) {
+function MoviesCardList() {
   return (
     <section className="movies">
       <ul className="movies__list">
