@@ -37,12 +37,6 @@
     padding: 0 30px;
   }
 
-  @media screen and (max-width: 768px) {
-    .header__wrapper-nav {
-      display: none;
-    }
-  }
-
   @media screen and (max-width: 576px) {
     .header__container {
       padding: 0 14px;

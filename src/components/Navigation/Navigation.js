@@ -1,38 +1,52 @@
 import React from "react";
 import "./Navigation.css";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useIsMobile } from "../../hooks/useIsMobile";
+import { useEffect } from "react/cjs/react.development";
 
-function Navigation() {
+function Navigation({loggedIn, isMobileView = false}) {
   const { pathname } = useLocation();
+  const isMobile = useIsMobile();
 
-  const [loggedIn, setLoggedIn] = useState(true);
   const text = `${loggedIn ? "Аккаунт" : "Войти"}`;
+
+  useEffect(() => {
+    console.log("is mobile", isMobile)
+  }, [isMobile]);
+
   return (
     <nav
-      className={`navigation ${loggedIn ? "navigation_is-mobile" : ""}
-    `}>
-      <ul className="navigation__list">
+      className={`
+        navigation
+        ${isMobileView ? "navigation_is-mobile" : ""}
+        ${!isMobileView && isMobile && loggedIn ? "navigation_hidden" : ""}
+      `}
+    >
+      <ul className={`navigation__list ${!isMobileView && isMobile && !loggedIn ? "navigation__list_row" : ""}`}>
         <div className="navigation__list-links">
-          <li
-            className={`navigation__item ${
-              loggedIn ? "navigation__item_visible" : "navigation__item_visible"
-            }`}>
-            <NavLink className="navigation__link" to="/">
-              Главная
-            </NavLink>
-            {/* ссылка скрыта для неавториз польз-ля */}
-          </li>
+          {loggedIn && isMobileView && (
+            <li
+              className={`navigation__item ${
+                 !isMobile ? "navigation__item_mobile_hidden" : ""
+              }`}>
+              <NavLink className="navigation__link" to="/">
+                Главная
+              </NavLink>
+              {/* ссылка скрыта для неавториз польз-ля */}
+            </li>
+          )}
 
-          <li
-            className={`navigation__item ${
-              loggedIn ? "" : "navigation__item_visible"
-            }`}>
-            <NavLink className="navigation__link" to="/movies">
-              Фильмы
-            </NavLink>
-            {/* ссылка скрыта для неавториз польз-ля */}
-          </li>
+          {loggedIn && (
+            <li
+              className={`navigation__item ${
+                !isMobileView && isMobile ? "navigation__item_mobile_hidden" : "navigation__item_visible"
+              }`}>
+              <NavLink className="navigation__link" to="/movies">
+                Фильмы
+              </NavLink>
+              {/* ссылка скрыта для неавториз польз-ля */}
+            </li>
+          )}
           {loggedIn ? (
             <li className="navigation__item">
               <NavLink to="/signup" className="navigation__link">

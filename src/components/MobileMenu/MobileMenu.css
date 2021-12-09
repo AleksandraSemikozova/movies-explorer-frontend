@@ -1,13 +1,13 @@
-.mobile-menu {
-  display: none;
-}
+.mobile-menu {}
 
+.mobile-menu_hidden,
+.mobile-menu__popup,
 .mobile-menu__icon {
   display: none;
 }
 
 @media screen and (max-width: 768px) {
-  .mobile-menu_opened {
+  .mobile-menu__popup_opened {
     display: block;
   }
 
@@ -23,12 +23,7 @@
   }
 
   .mobile-menu__icon_opened {
-    display: block;
     background: url("../../images/icon-menu-closed.svg") no-repeat center;
-    position: fixed;
-    right: 29px;
-    margin: 0;
-    z-index: 20;
   }
 }
 @media screen and (max-width: 450px) {

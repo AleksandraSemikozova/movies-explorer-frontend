@@ -5,16 +5,12 @@ import Navigation from "../Navigation/Navigation";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 function Header(props) {
   const { pathname } = useLocation();
   const [loggedIn, setLoggedIn] = useState(true);
-
-  const [activeBurger, setActiveBurger] = React.useState(false);
-
-  function handleActiveBurger(props) {
-    setActiveBurger(!activeBurger);
-  }
+  const isMobile = useIsMobile();
 
   return (
     <header className="header">
@@ -25,9 +21,9 @@ function Header(props) {
           </Link>
         </div>
         <div className="header__wrap-nav">
-          <Navigation />
+          <Navigation loggedIn={loggedIn} />
         </div>
-        {loggedIn ? <MobileMenu /> : ""}
+        {isMobile && <MobileMenu loggedIn={loggedIn} />}
       </div>
     </header>
   );
