@@ -8,13 +8,7 @@ import { useState } from "react";
 
 function Header(props) {
   const { pathname } = useLocation();
-  const [loggedIn, setLoggedIn] = useState(true);
-
-  const [activeBurger, setActiveBurger] = React.useState(false);
-
-  function handleActiveBurger(props) {
-    setActiveBurger(!activeBurger);
-  }
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <header className="header">

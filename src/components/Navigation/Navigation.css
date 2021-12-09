@@ -70,9 +70,6 @@
   cursor: pointer;
 }
 
-.navigation_is-mobile {
-  display: none;
-}
 @media screen and (max-width: 768px) {
   .navigation_is-mobile {
     background-color: white;

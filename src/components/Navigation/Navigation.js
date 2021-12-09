@@ -6,12 +6,10 @@ import { useState } from "react";
 function Navigation() {
   const { pathname } = useLocation();
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const text = `${loggedIn ? "Аккаунт" : "Войти"}`;
   return (
-    <nav
-      className={`navigation ${loggedIn ? "navigation_is-mobile" : ""}
-    `}>
+    <nav className="navigation">
       <ul className="navigation__list">
         <div className="navigation__list-links">
           <li
