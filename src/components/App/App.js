@@ -34,6 +34,9 @@ function App() {
         <Route exact path="/signup">
           <Register />
         </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
       </Switch>
     </div>
   );
