@@ -9,7 +9,7 @@ function AboutProject(props) {
       <FlexContainer>
         <SectionTitle title="О проекте" />
         <ul className="about-project__description">
-          <li>
+          <li className="about-project__description-item">
             <h3 className="about-project__subtitle">
               Дипломный проект включал 5 этапов
             </h3>

@@ -32,16 +32,16 @@
   .header__container {
     padding: 0 30px;
   }
+}
 
-  @media screen and (max-width: 768px) {
-    .header__wrap-nav {
-      display: none;
-    }
-  }
+@media screen and (max-width: 768px) {
+  /* .header__wrap-nav {
+    display: none;
+  } */
+}
 
-  @media screen and (max-width: 576px) {
-    .header__container {
-      padding: 0 14px;
-    }
+@media screen and (max-width: 450px) {
+  .header__container {
+    padding: 0 14px;
   }
 }

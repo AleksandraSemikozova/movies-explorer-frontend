@@ -1,13 +1,11 @@
-.mobile-menu {
-  display: none;
-}
-
+.mobile-menu_hidden,
+.mobile-menu__popup,
 .mobile-menu__icon {
   display: none;
 }
 
 @media screen and (max-width: 768px) {
-  .mobile-menu_opened {
+  .mobile-menu__popup_opened {
     display: block;
   }
 
@@ -23,59 +21,10 @@
   }
 
   .mobile-menu__icon_opened {
-    display: block;
     background: url("../../images/icon-menu-closed.svg") no-repeat center;
-    position: fixed;
-    right: 29px;
-    margin: 0;
-    z-index: 20;
-  }
-
-  .navigation {
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 70%;
-    height: 100%;
-    padding: 0;
-    z-index: 1;
-  }
-
-  .navigation__item_visible {
-    display: flex;
-  }
-
-  .navigation__item {
-    margin: 0 0 28px 0;
-  }
-
-  .navigation__list {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-around;
-  }
-
-  .navigation__list-links {
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-  }
-
-  .navigation__link {
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 1.2;
-    margin: 0;
-  }
-
-  .navigation__link_type_account {
-    margin: 0;
   }
 }
+
 @media screen and (max-width: 450px) {
   .navigation {
     width: 100%;

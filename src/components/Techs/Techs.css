@@ -25,9 +25,10 @@
   padding: 0;
   margin: 90px auto;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   list-style: none;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
   letter-spacing: -0.04em;
@@ -45,6 +46,35 @@
   align-items: center;
 }
 
-.techs__item:last-of-type {
-  margin-right: 0;
+@media screen and (max-width: 768px) {
+  .techs__description {
+    font-size: 12px;
+  }
+
+  .techs__list {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .techs {
+    background: white;
+  }
+
+  .techs__list {
+    margin: 50px 20px;
+  }
+
+  .techs__title {
+    font-size: 30px;
+  }
+
+  .techs__description {
+    font-size: 11px;
+  }
+
+  .techs__item {
+    width: 84px;
+    height: 57px;
+  }
 }

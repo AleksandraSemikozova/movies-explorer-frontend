@@ -7,3 +7,18 @@
   line-height: 1.2;
   border-bottom: 1px solid #000;
 }
+
+@media screen and (max-width: 768px) {
+  .section__title {
+    margin-top: 90px;
+    padding-bottom: 23px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .section__title {
+    font-size: 18px;
+    margin-top: 70px;
+    padding-bottom: 28px;
+  }
+}

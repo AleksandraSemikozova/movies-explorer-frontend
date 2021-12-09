@@ -1,14 +1,24 @@
 .login {
-  max-width: 396px;
-  margin: 0 auto;
+  max-width: 410px;
   display: flex;
-  height: 100vh;
   flex-direction: column;
-  justify-content: flex-start;
+  padding: 70px 0 0;
+  margin: 0 auto;
 }
 
-.login__header-link {
-  width: 38px;
-  height: 38px;
-  margin: 70px 0 0 0;
+@media screen and (max-width: 768px) {
+  .login {
+    padding: 232px 0 0;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .login {
+    padding: 55px 0 0;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
 }

@@ -1,14 +1,22 @@
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1140px;
+  padding: 0 50px;
+}
+
 .portfolio__title {
   color: #a0a0a0;
   font-weight: 400;
   font-size: 18px;
-  line-height: 20px;
   margin: 0;
 }
 
 .portfolio__link-list {
   list-style: none;
-  margin: 50px 0 50px;
+  margin: 50px 0 100px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -39,5 +47,18 @@
   text-decoration: none;
 }
 
-.portfolio__link-arrow {
+@media screen and (max-width: 450px) {
+  .portfolio__title {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .portfolio {
+    padding: 0 14px;
+  }
 }

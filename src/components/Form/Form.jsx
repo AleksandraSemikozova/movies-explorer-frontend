@@ -6,8 +6,6 @@ function Form(props) {
   const { pathname } = useLocation();
   return (
     <section className="form">
-      <Header />
-
       <h2 className="form__title">
         {props.title}
         <span>{props.userName}!</span>
@@ -16,17 +14,6 @@ function Form(props) {
         <div>
           <fieldset className="form__input-container">
             {props.children}
-            <label
-              className={`form__input-label form__input-label_${props.name}
-              ${
-                pathname === "/profile"
-                  ? "form__input-label_profile_invisible"
-                  : ""
-              }`}>
-              Имя
-              <input type="text" className="form__input-item" name="name" />
-              <span className="form__item-error email-item-error"></span>
-            </label>
             <label
               className={`form__input-label form__input-label_${props.name}
               ${

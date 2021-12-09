@@ -1,8 +1,8 @@
 .form {
+  height: 70vh;
   max-width: 396px;
   margin: 0 auto;
   display: flex;
-  height: 100vh;
   flex-direction: column;
   justify-content: flex-start;
 }
@@ -135,6 +135,21 @@
   color: #ee3465;
 }
 
-.form__button-container {
-  margin-bottom: 70px;
+@media screen and (max-width: 768px) {
+  .form {
+    height: 50vh;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .form {
+    align-items: center;
+  }
+
+  .form__title {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.2;
+    margin: 50px 0 80px;
+  }
 }

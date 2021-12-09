@@ -4,7 +4,7 @@ import FlexContainer from "../FlexContainer/FlexContainer";
 
 function Portfolio() {
   return (
-    <FlexContainer>
+    <section className="portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
       <ul className="portfolio__link-list">
         <li className="portfolio__link-item">
@@ -32,7 +32,7 @@ function Portfolio() {
           </a>
         </li>
       </ul>
-    </FlexContainer>
+    </section>
   );
 }
 
