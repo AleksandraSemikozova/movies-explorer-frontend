@@ -2,16 +2,12 @@ import React from "react";
 import "./Navigation.css";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect } from "react";
 
 function Navigation({ loggedIn = false, isMobileView = false }) {
   const isMobile = useIsMobile();
 
   const text = `${loggedIn ? "Аккаунт" : "Войти"}`;
-
-  useEffect(() => {
-    console.log("is mobile", isMobile);
-  }, [isMobile]);
 
   return (
     <nav
