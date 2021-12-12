@@ -1,0 +1,15 @@
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1140px;
+  padding: 0 50px;
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 450px) {
+  .flex-container {
+    padding: 0 18px;
+  }
+}

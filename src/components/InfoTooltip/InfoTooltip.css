@@ -1,0 +1,80 @@
+.info-tooltip__popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f5f5f5;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
+}
+
+.info-tooltip__popup_opened {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+.info-tooltip__container {
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  color: #000;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  max-width: 430px;
+  background-color: #fff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 520px) {
+  .info-tooltip__container {
+    max-width: 282px;
+  }
+}
+
+.info-tooltip__close-icon {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  border: 0;
+  transform: rotate(-45deg);
+  height: 40px;
+  width: 40px;
+  background: url("../../images/icon-menu-closed.svg") center no-repeat;
+  background-size: cover;
+}
+
+.info-tooltip__close-icon:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 520px) {
+  .info-tooltip__close-icon {
+    right: 0;
+    height: 26px;
+    width: 26px;
+  }
+}
+
+.info-tooltip__result-icon {
+  width: 120px;
+  height: 120px;
+  margin: 60px auto 32px;
+}
+
+.info-tooltip__result-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0 0 60px;
+  color: black;
+}

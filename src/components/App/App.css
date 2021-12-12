@@ -1,0 +1,7 @@
+@import url("../../vendor/fonts/inter.css");
+
+.page {
+  font-family: "inter", "Arial", sans-serif;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
