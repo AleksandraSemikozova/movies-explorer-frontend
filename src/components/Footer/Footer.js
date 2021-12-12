@@ -1,6 +1,5 @@
 import React from "react";
 import "./Footer.css";
-import FlexContainer from "../FlexContainer/FlexContainer";
 
 function Footer() {
   return (
@@ -16,17 +15,19 @@ function Footer() {
           <nav className="footer__nav">
             <ul className="footer__links">
               <li className="footer__link-list">
-                <a className="footer__link" href="#">
+                <a className="footer__link" href="https://practicum.yandex.ru/">
                   Яндекс.Практикум
                 </a>
               </li>
               <li className="footer__link-list">
-                <a className="footer__link" href="#">
+                <a
+                  className="footer__link"
+                  href="https://github.com/AleksandraSemikozova">
                   GitHub
                 </a>
               </li>
               <li className="footer__link-list">
-                <a className="footer__link" href="#">
+                <a className="footer__link" href="https://www.facebook.com">
                   Facebook
                 </a>
               </li>

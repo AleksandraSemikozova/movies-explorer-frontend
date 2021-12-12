@@ -13,13 +13,12 @@ function MoviesCard({ movie }) {
   }
   
     ${pathname === "/saved-movies" ? "movie__remove-btn" : ""}`;
-  // const movieRemoveButtonClassName = `movie__save-btn ${
-  //   pathname === "/saved-movies" ? "movie__remove-btn" : ""
-  // }`;
+
   const movieButtonTextClassName = `movie__save-btn-text ${
     isSaved ? "movie__save-btn-text_saved" : ""
   }
   ${pathname === "/saved-movies" ? "movie__save-btn-text_saved" : ""}`;
+
   function handleSaved() {
     if (!isSaved) {
       setIsSaved(true);

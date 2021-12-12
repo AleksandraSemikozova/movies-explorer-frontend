@@ -22,10 +22,12 @@ function AboutMe() {
               заниматься фриланс-заказами и ушёл с постоянной работы.
             </p>
             <p className="about-me__links">
-              <a className="about-me__link" href="#">
+              <a className="about-me__link" href="https://www.facebook.com/">
                 Facebook
               </a>
-              <a className="about-me__link" href="#">
+              <a
+                className="about-me__link"
+                href="https://github.com/AleksandraSemikozova">
                 GitHab
               </a>
             </p>

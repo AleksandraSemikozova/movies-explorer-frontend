@@ -19,7 +19,7 @@
   width: 96px;
   height: 26px;
   border-radius: 10px;
-  transition: transform linear 0.5s;
+  transition: transform linear 0.4s;
 }
 
 .navtab__link {

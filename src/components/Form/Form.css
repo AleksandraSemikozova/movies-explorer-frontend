@@ -98,7 +98,7 @@
   height: 45px;
   outline: none;
   cursor: pointer;
-  transition: transform linear 0.3s;
+  transition: opacity linear 0.4s;
 }
 
 .form__submit-btn_profile {
@@ -110,7 +110,7 @@
 }
 
 .form__submit-btn:hover {
-  transform: scale(1.1);
+  opacity: 0.6;
 }
 
 .form__text {
@@ -125,6 +125,11 @@
   color: #2be080;
   text-decoration: none;
   padding-left: 5px;
+  transition: opacity linear 0.4s;
+}
+
+.form__link:hover {
+  opacity: 0.6;
 }
 
 .form__link_profile {

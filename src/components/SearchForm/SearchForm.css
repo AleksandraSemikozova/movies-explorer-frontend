@@ -13,12 +13,18 @@
 }
 
 .search-movies__input {
+  padding-left: 20px;
   height: 46px;
   width: 100%;
   background: #f9f9f9;
   border-radius: 40px;
   border: none;
   outline: none;
+  transition: background-color linear 0.4s;
+}
+
+.search-movies__input:focus {
+  background-color: rgba(43, 224, 128, 0.3);
 }
 
 .search-movies__input::placeholder {

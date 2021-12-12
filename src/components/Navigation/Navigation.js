@@ -4,8 +4,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useEffect } from "react/cjs/react.development";
 
-function Navigation({ loggedIn = true, isMobileView = false }) {
-  const { pathname } = useLocation();
+function Navigation({ loggedIn = false, isMobileView = false }) {
   const isMobile = useIsMobile();
 
   const text = `${loggedIn ? "Аккаунт" : "Войти"}`;

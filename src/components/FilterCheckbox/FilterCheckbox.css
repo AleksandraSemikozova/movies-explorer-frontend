@@ -17,6 +17,7 @@
   appearance: none;
   background: url("../../images/checkbox-inactive.svg") no-repeat 2px;
   margin-right: 12px;
+  transition: background linear 0.4s;
 }
 
 .checkbox__input:checked {

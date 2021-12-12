@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NotFound.css";
 
 function NotFound() {

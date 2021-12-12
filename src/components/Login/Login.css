@@ -6,6 +6,16 @@
   margin: 0 auto;
 }
 
+.form__logo {
+  transition: transform linear 0.4s;
+}
+
+.form__logo:hover {
+  transform: scale(1.1);
+  opacity: 0.6;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .login {
     padding: 232px 0 0;

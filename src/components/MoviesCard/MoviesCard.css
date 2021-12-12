@@ -82,3 +82,9 @@
   transition: transform linear 0.5s;
   background: url("../../images/icon-remove-movie.svg") no-repeat center;
 }
+
+.movie__remove-btn:hover {
+  transform: scale(1.2);
+  opacity: 0.6;
+  cursor: pointer;
+}
