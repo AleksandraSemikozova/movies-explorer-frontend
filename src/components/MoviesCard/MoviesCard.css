@@ -16,6 +16,10 @@
 
 .movie__title {
   margin: 0;
+  max-width: 260px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-weight: 500;
   font-size: 15px;
   line-height: 1.2;
@@ -58,7 +62,7 @@
 }
 
 .movie__save-btn_saved {
-  background: #ee3465 url("../../images/icon-save-btn.svg") no-repeat center;
+  background: #ee3465 url('../../images/icon-save-btn.svg') no-repeat center;
   border: none;
 }
 
@@ -84,7 +88,7 @@
   border: none;
   border-radius: 30px;
   transition: transform linear 0.5s;
-  background: url("../../images/icon-remove-movie.svg") no-repeat center;
+  background: url('../../images/icon-remove-movie.svg') no-repeat center;
 }
 
 .movie__remove-btn:hover {

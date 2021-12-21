@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "./MoviesCardList.css";
-import MoviesCard from "../MoviesCard/MoviesCard";
+import React, { useState, useEffect } from 'react';
+import './MoviesCardList.css';
+import MoviesCard from '../MoviesCard/MoviesCard';
 import {
   moviesCountMobile,
   moviesCountTablet,
@@ -10,7 +10,7 @@ import {
   windowWidthDesktop,
   windowWidthTablet,
   windowWidthMobile,
-} from "../../utils/constants";
+} from '../../utils/constants';
 
 function MoviesCardList(props) {
   const [moviesCount, setMoviesCount] = useState(0);
@@ -23,9 +23,9 @@ function MoviesCardList(props) {
 
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResizeWindow);
+    window.addEventListener('resize', handleResizeWindow);
     return () => {
-      window.removeEventListener("resize", handleResizeWindow);
+      window.removeEventListener('resize', handleResizeWindow);
     };
   }, []);
 
@@ -49,15 +49,6 @@ function MoviesCardList(props) {
 
   return (
     <section className="movies">
-      {/* <div
-        className={`${
-          props.isErrorActive
-            ? "movies__error-block"
-            : "movies__error-block_no-display"
-        }`}>
-        Во время запроса произошла ошибка. Возможно, проблема с соединением или
-        сервер недоступен. Подождите немного и попробуйте ещё раз
-      </div> */}
       <ul className="movies__list">
         {props.dataMovies.slice(0, moviesCount).map((item) => (
           <MoviesCard

@@ -5,13 +5,10 @@
 }
 
 .movies__error-block {
+  display: flex;
   min-height: 150px;
   margin: 0 auto;
-  text-align: center;
-}
-
-.movies__error-block_no-display {
-  display: none;
+  justify-content: center;
 }
 
 .movies__list {

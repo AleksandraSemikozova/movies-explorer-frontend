@@ -76,16 +76,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (loggedIn) {
-      getApiMovies();
-      getSavedMovies();
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-
-    if (jwt) {
+    if (localStorage.getItem('jwt')) {
+      let jwt = localStorage.getItem('jwt');
       mainApi
         .getToken(jwt)
         .then((data) => {
@@ -101,6 +93,13 @@ function App() {
         });
     }
   }, [history]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      getApiMovies();
+      getSavedMovies();
+    }
+  }, [loggedIn]);
 
   function handleInfoTooltipOpen() {
     setIsTooltipOpen(true);
@@ -120,10 +119,7 @@ function App() {
       .register({ email, password, name })
       .then((res) => {
         if (res) {
-          handleInfoTooltipContent({
-            iconPath: OkIcon,
-            text: 'Вы успешно зарегистрировались!',
-          });
+          handleInfoTooltipContent(OkIcon, 'Вы успешно зарегистрировались!');
           handleInfoTooltipOpen();
           setTimeout(history.push, 3000, '/signin');
           setTimeout(handleInfoTooltipClose, 2500);
@@ -131,25 +127,25 @@ function App() {
       })
       .catch((res) => {
         if (res.status === 400) {
-          handleInfoTooltipContent({
-            iconPath: ErrorIcon,
-            text: 'Некорректно заполнено одно из полей!',
-          });
+          handleInfoTooltipContent(
+            ErrorIcon,
+            'Некорректно заполнено одно из полей!'
+          );
           handleInfoTooltipOpen();
           setTimeout(handleInfoTooltipClose, 2500);
         }
         if (res.status === 409) {
-          handleInfoTooltipContent({
-            iconPath: ErrorIcon,
-            text: 'Пользователь с указанным email уже зарегистрирован',
-          });
+          handleInfoTooltipContent(
+            ErrorIcon,
+            'Пользователь с указанным email уже зарегистрирован'
+          );
           handleInfoTooltipOpen();
           setTimeout(handleInfoTooltipClose, 2500);
         } else {
-          handleInfoTooltipContent({
-            iconPath: ErrorIcon,
-            text: 'Произошла ошибка, повторите пожалуйста позднее.',
-          });
+          handleInfoTooltipContent(
+            ErrorIcon,
+            'Произошла ошибка, повторите пожалуйста позднее.'
+          );
           handleInfoTooltipOpen();
           setTimeout(handleInfoTooltipClose, 2500);
         }
@@ -169,25 +165,25 @@ function App() {
       })
       .catch((res) => {
         if (res.status === 400) {
-          handleInfoTooltipContent({
-            iconPath: ErrorIcon,
-            text: 'Некорректно заполнено одно из полей!',
-          });
+          handleInfoTooltipContent(
+            ErrorIcon,
+            'Некорректно заполнено одно из полей!'
+          );
           handleInfoTooltipOpen();
           setTimeout(handleInfoTooltipClose, 2500);
         }
         if (res.status === 401) {
-          handleInfoTooltipContent({
-            iconPath: ErrorIcon,
-            text: 'Пользователь с указаным email не найден',
-          });
+          handleInfoTooltipContent(
+            ErrorIcon,
+            'Пользователь с указаным email не найден'
+          );
           handleInfoTooltipOpen();
           setTimeout(handleInfoTooltipClose, 2500);
         } else {
-          handleInfoTooltipContent({
-            iconPath: ErrorIcon,
-            text: 'Произошла ошибка, повторите пожалуйста позднее.',
-          });
+          handleInfoTooltipContent(
+            ErrorIcon,
+            'Произошла ошибка, повторите пожалуйста позднее.'
+          );
           handleInfoTooltipOpen();
           setTimeout(handleInfoTooltipClose, 2500);
         }
@@ -202,19 +198,16 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
 
-        handleInfoTooltipContent({
-          iconPath: OkIcon,
-          text: 'Данные успешно обновлены',
-        });
+        handleInfoTooltipContent(OkIcon, 'Данные успешно обновлены');
         handleInfoTooltipOpen();
         setTimeout(history.push, 3000, '/sign-in');
         setTimeout(handleInfoTooltipClose, 2500);
       })
       .catch(() => {
-        handleInfoTooltipContent({
-          iconPath: ErrorIcon,
-          text: 'Произошла ошибка, повторите пожалуйста позднее.',
-        });
+        handleInfoTooltipContent(
+          ErrorIcon,
+          'Произошла ошибка, повторите пожалуйста позднее.'
+        );
         handleInfoTooltipOpen();
         setTimeout(handleInfoTooltipClose, 2500);
       })

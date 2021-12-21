@@ -22,7 +22,7 @@
 
 .info-tooltip__container {
   box-sizing: border-box;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   color: #000;
   position: relative;
@@ -46,10 +46,9 @@
   top: -40px;
   right: -40px;
   border: 0;
-  transform: rotate(-45deg);
   height: 40px;
   width: 40px;
-  background: url("../../images/icon-menu-closed.svg") center no-repeat;
+  background: url('../../images/icon-menu-closed.svg') center no-repeat;
   background-size: cover;
 }
 

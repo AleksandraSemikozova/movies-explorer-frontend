@@ -1,7 +1,8 @@
-import SearchForm from "../SearchForm/SearchForm";
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import SearchForm from '../SearchForm/SearchForm';
+import './SavedMovies.css';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function SavedMovies(props) {
   return (
@@ -13,13 +14,14 @@ function SavedMovies(props) {
         isChecked={props.isChecked}
       />
       <MoviesCardList
+        loggedIn={props.loggedIn}
         dataMovies={props.movies}
         isSavedMovie={props.isSavedMovie}
         removeMovie={props.removeMovie}
         isAllMovies={false}
       />
       {props.isVisible && props.movies.length === 0 && (
-        <p className="saved-movies__nofound-msg">Ничего не найдено</p>
+        <p className="saved-movies__error-block">Ничего не найдено</p>
       )}
       <Footer />
     </>
