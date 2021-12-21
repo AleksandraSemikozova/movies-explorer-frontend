@@ -28,7 +28,7 @@ function Profile(props) {
       <Header loggedIn={props.loggedIn} />
       <section className="profile">
         <Form
-          isLoading={props.isLoading}
+          isPreloader={props.isPreloader}
           onSubmit={updateProfile}
           name="profile"
           userName={currentUser.name}

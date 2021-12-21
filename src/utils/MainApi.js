@@ -90,19 +90,21 @@ export const saveMovie = (movie) => {
       Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify({
-      country: movie.country,
-      director: movie.director,
-      duration: movie.duration,
-      year: movie.year,
-      description: movie.description,
-      image: movie.image,
-      trailer: movie.trailer,
-      thumbnail: movie.thumbnail,
-      movieId: movie.movieId,
-      nameRU: movie.nameRU,
-      nameEN: movie.nameEN,
+      country: movie.country || "Нет данных",
+      director: movie.director || "Нет данных",
+      duration: movie.duration || "Нет данных",
+      year: movie.year || "Нет данных",
+      description: movie.description || "Нет данных",
+      image: movie.image || "Нет данных",
+      trailer: movie.trailer || "Нет данных",
+      thumbnail: movie.thumbnail || "Нет данных",
+      movieId: movie.movieId || "Нет данных",
+      nameRU: movie.nameRU || "Нет данных",
+      nameEN: movie.nameEN || "Нет данных",
     }),
-  }).then(checkResponse);
+  })
+    .then(checkResponse)
+    .then((data) => data);
 };
 //___сохранить фильм___
 
@@ -114,12 +116,14 @@ export const getSavedMovies = () => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
-  }).then(checkResponse);
+  })
+    .then(checkResponse)
+    .then((data) => data);
 };
 //___получаем сохраненные фильмы ___
 
-export const deleteMovie = (movieId) => {
-  return fetch(`${BASE_URL}/movies/${movieId}`, {
+export const deleteMovie = (id) => {
+  return fetch(`${BASE_URL}/movies/${id}`, {
     method: "DELETE",
     headers: {
       Accept: "application/json",

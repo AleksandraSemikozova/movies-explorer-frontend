@@ -1,202 +1,237 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Redirect,
   Route,
   Switch,
   useHistory,
   useLocation,
-} from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import "./App.css";
-import ErrorIcon from "../../images/Union-not.svg";
-import OkIcon from "../../images/Union-yes.svg";
+} from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import './App.css';
+import ErrorIcon from '../../images/Union-not.svg';
 
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import Movies from "../Movies/Movies";
-import SavedMovies from "../SavedMovies/SavedMovies.js";
-import Profile from "../Profile/Profile.js";
-import Register from "../Register/Register.js";
-import Login from "../Login/Login.js";
-import Footer from "../Footer/Footer";
-import NotFound from "../NotFound/NotFound.js";
-import InfoPopup from "../InfoTooltip/InfoTooltip.js";
-import Preloader from "../Preloader/Preloader.js";
-import * as mainApi from "../../utils/MainApi";
-import * as moviesApi from "../../utils/MoviesApi";
-import { BASE_URL, shortDuration } from "../../utils/constants";
+import OkIcon from '../../images/Union-yes.svg';
+
+import Header from '../Header/Header';
+import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies.js';
+import Profile from '../Profile/Profile.js';
+import Register from '../Register/Register.js';
+import Login from '../Login/Login.js';
+import Footer from '../Footer/Footer';
+import NotFound from '../NotFound/NotFound.js';
+import InfoPopup from '../InfoTooltip/InfoTooltip.js';
+import Preloader from '../Preloader/Preloader.js';
+import * as mainApi from '../../utils/MainApi';
+import * as moviesApi from '../../utils/MoviesApi';
+import { BASE_URL, shortDuration } from '../../utils/constants';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({
-    name: "",
-    email: "",
+    name: '',
+    email: '',
   });
   const [userMovies, setUserMovies] = useState([]);
   const [resultAllMovies, setResultAllMovies] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState();
-  const [isLoading, setIsloading] = useState(false);
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [isOpenPopup, setIsOpenPopup] = useState(false);
-  const [infoMessage, setInfoMessage] = useState("");
+  const [loggedIn, setLoggedIn] = useState();
+  const [isPreloader, setIsPreloader] = useState(false);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [isVisibleBlock, setIsVisibleBlock] = useState(false);
+  const [errorBlock, setErrorBlock] = useState(false);
+  const [message, setMessage] = React.useState([]);
+  const [icon, setIcon] = useState([]);
+
   const history = useHistory();
   const locationPath = useLocation();
 
   useEffect(() => {
-    tokenCheck();
-  }, []);
+    setIsPreloader(true);
+    Promise.all([mainApi.getUserInfo(), mainApi.getSavedMovies()])
+      .then(([userInfo, userMoviesData]) => {
+        setCurrentUser(userInfo);
+        localStorage.setItem('userMovies', JSON.stringify(userMoviesData));
+        setUserMovies(userMoviesData);
+        setUserMovies(JSON.parse(localStorage.getItem('userMovies')));
+        setErrorBlock(false);
+      })
+      .catch(() => history.push('/'))
+
+      .finally(() => setIsPreloader(false));
+  }, [loggedIn, history]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      setIsloading(true);
-      Promise.all([mainApi.getUserInfo(), mainApi.getSavedMovies()])
-        .then(([userData, userMoviesData]) => {
-          setCurrentUser(userData);
-          localStorage.setItem("userMovies", JSON.stringify(userMoviesData));
-          setUserMovies(userMoviesData);
-          setUserMovies(JSON.parse(localStorage.getItem("userMovies")));
-          setIsVisibleBlock(false);
-        })
-        .catch(() => history.push("/"))
-
-        .finally(() => setIsloading(false));
-    }
-  }, [isLoggedIn, history]);
-
-  useEffect(() => {
-    if (localStorage.getItem("resultMovies")) {
-      setResultAllMovies(JSON.parse(localStorage.getItem("resultMovies")));
+    if (localStorage.getItem('resultMovies')) {
+      setResultAllMovies(JSON.parse(localStorage.getItem('resultMovies')));
     } else {
       getApiMovies();
     }
 
-    if (localStorage.getItem("userMovies")) {
-      setUserMovies(JSON.parse(localStorage.getItem("userMovies")));
+    if (localStorage.getItem('userMovies')) {
+      setUserMovies(JSON.parse(localStorage.getItem('userMovies')));
     } else {
       getSavedMovies();
     }
   }, []);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (loggedIn) {
       getApiMovies();
       getSavedMovies();
     }
-  }, [isLoggedIn]);
+  }, [loggedIn]);
 
-  const tokenCheck = () => {
-    if (localStorage.getItem("jwt")) {
-      let jwt = localStorage.getItem("jwt");
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+
+    if (jwt) {
       mainApi
         .getToken(jwt)
         .then((data) => {
           if (data.email) {
-            setIsLoggedIn(true);
+            setLoggedIn(true);
             history.push(locationPath.pathname);
           }
         })
         .catch((res) => {
           if (res.status === 400)
-            console.log("Токен не передан или передан не в том формате");
-          if (res.status === 401) console.log("Переданный токен некорректен");
+            console.log('Токен не передан или передан не в том формате');
+          if (res.status === 401) console.log('Переданный токен некорректен');
         });
     }
-    history.push("/");
-  };
+  }, [history]);
 
-  function handleClickMenu() {
-    setIsOpenMenu(true);
+  function handleInfoTooltipOpen() {
+    setIsTooltipOpen(true);
+  }
+  function handleInfoTooltipClose() {
+    setIsTooltipOpen(false);
   }
 
-  function handleCloseMenu() {
-    setIsOpenMenu(false);
+  function handleInfoTooltipContent(iconPath, text) {
+    setMessage([text]);
+    setIcon([iconPath]);
   }
 
-  function handleClosePopup() {
-    setIsOpenPopup(false);
-  }
-
-  const handleRegister = ({ email, password, name }) => {
-    setIsloading(true);
-    return mainApi
+  function registration({ email, password, name }) {
+    setIsPreloader(true);
+    mainApi
       .register({ email, password, name })
       .then((res) => {
         if (res) {
-          setIsOpenPopup(true);
-          setInfoMessage("Вы успешно зарегистрировались!");
+          handleInfoTooltipContent({
+            iconPath: OkIcon,
+            text: 'Вы успешно зарегистрировались!',
+          });
+          handleInfoTooltipOpen();
+          setTimeout(history.push, 3000, '/signin');
+          setTimeout(handleInfoTooltipClose, 2500);
         }
       })
       .catch((res) => {
         if (res.status === 400) {
-          setIsOpenPopup(true);
-          setInfoMessage("Некорректно заполнено одно из полей");
+          handleInfoTooltipContent({
+            iconPath: ErrorIcon,
+            text: 'Некорректно заполнено одно из полей!',
+          });
+          handleInfoTooltipOpen();
+          setTimeout(handleInfoTooltipClose, 2500);
         }
         if (res.status === 409) {
-          setIsOpenPopup(true);
-          setInfoMessage("Пользователь с указанным email уже зарегистрирован");
+          handleInfoTooltipContent({
+            iconPath: ErrorIcon,
+            text: 'Пользователь с указанным email уже зарегистрирован',
+          });
+          handleInfoTooltipOpen();
+          setTimeout(handleInfoTooltipClose, 2500);
         } else {
-          setIsOpenPopup(true);
-          setInfoMessage("Произошла ошибка, повторите пожалуйста позднее.");
+          handleInfoTooltipContent({
+            iconPath: ErrorIcon,
+            text: 'Произошла ошибка, повторите пожалуйста позднее.',
+          });
+          handleInfoTooltipOpen();
+          setTimeout(handleInfoTooltipClose, 2500);
         }
       })
-      .finally(() => setIsloading(false));
-  };
+      .finally(() => setIsPreloader(false));
+  }
 
-  const handleLogin = ({ email, password }) => {
-    setIsloading(true);
-    return mainApi
+  function authorization({ email, password }) {
+    setIsPreloader(true);
+    mainApi
       .authorize({ email, password })
       .then((res) => {
-        setIsLoggedIn(true);
-        localStorage.setItem("jwt", res.token);
-        history.push("/movies");
+        setLoggedIn(true);
+        localStorage.setItem('jwt', res.token);
+        history.push('/movies');
         return res;
       })
       .catch((res) => {
         if (res.status === 400) {
-          setIsOpenPopup(true);
-          setInfoMessage("Не передано одно из полей");
+          handleInfoTooltipContent({
+            iconPath: ErrorIcon,
+            text: 'Некорректно заполнено одно из полей!',
+          });
+          handleInfoTooltipOpen();
+          setTimeout(handleInfoTooltipClose, 2500);
         }
         if (res.status === 401) {
-          setIsOpenPopup(true);
-          setInfoMessage("Пользователь с указаным email не найден");
+          handleInfoTooltipContent({
+            iconPath: ErrorIcon,
+            text: 'Пользователь с указаным email не найден',
+          });
+          handleInfoTooltipOpen();
+          setTimeout(handleInfoTooltipClose, 2500);
         } else {
-          setIsOpenPopup(true);
-          setInfoMessage("Произошла ошибка, повторите пожалуйста позднее.");
+          handleInfoTooltipContent({
+            iconPath: ErrorIcon,
+            text: 'Произошла ошибка, повторите пожалуйста позднее.',
+          });
+          handleInfoTooltipOpen();
+          setTimeout(handleInfoTooltipClose, 2500);
         }
       })
-      .finally(() => setIsloading(false));
-  };
+      .finally(() => setIsPreloader(false));
+  }
 
-  const handleUpdateUserProfile = ({ name, email }) => {
-    setIsloading(true);
-    return mainApi
+  function handleUpdateUserProfile({ name, email }) {
+    setIsPreloader(true);
+    mainApi
       .updateUserInfo(name, email)
       .then((res) => {
         setCurrentUser(res);
-        setIsOpenPopup(true);
-        setInfoMessage("Данные успешно обновлены");
+
+        handleInfoTooltipContent({
+          iconPath: OkIcon,
+          text: 'Данные успешно обновлены',
+        });
+        handleInfoTooltipOpen();
+        setTimeout(history.push, 3000, '/sign-in');
+        setTimeout(handleInfoTooltipClose, 2500);
       })
       .catch(() => {
-        setIsOpenPopup(true);
-        setInfoMessage("Произошла ошибка, повторите пожалуйста позднее.");
+        handleInfoTooltipContent({
+          iconPath: ErrorIcon,
+          text: 'Произошла ошибка, повторите пожалуйста позднее.',
+        });
+        handleInfoTooltipOpen();
+        setTimeout(handleInfoTooltipClose, 2500);
       })
-      .finally(() => setIsloading(false));
-  };
+      .finally(() => setIsPreloader(false));
+  }
 
-  const handleLogOut = () => {
-    setIsLoggedIn(false);
-    localStorage.clear();
+  const handleSignOut = () => {
+    setLoggedIn(false);
+    localStorage.removeItem('jwt');
     setResultAllMovies([]);
     setUserMovies([]);
-    history.push("/signin");
+    history.push('/signin');
   };
 
   // фуекция сохранения всех фильмов в локальное хранилище
-  const getApiMovies = () => {
-    setIsloading(true);
+  function getApiMovies() {
+    setIsPreloader(true);
     moviesApi
       .getMovies()
       .then((data) => {
@@ -213,22 +248,23 @@ function App() {
           nameEN: movie.nameEN,
           movieId: movie.id,
         }));
-        localStorage.setItem("movies", JSON.stringify(movies));
+        localStorage.setItem('movies', JSON.stringify(movies));
       })
       .catch(() => {
-        setIsOpenPopup(true);
-        setInfoMessage(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+        handleInfoTooltipContent(
+          ErrorIcon,
+          'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'
         );
+        handleInfoTooltipOpen();
       })
-      .finally(() => setIsloading(false));
-  };
+      .finally(() => setIsPreloader(false));
+  }
 
   // функция поиска фильмов
   const handleSearchMovie = (inputValue) => {
     getApiMovies();
-    setIsVisibleBlock(false);
-    const movies = JSON.parse(localStorage.getItem("movies"));
+    setErrorBlock(false);
+    const movies = JSON.parse(localStorage.getItem('movies'));
     const results = movies.filter((movie) => {
       return JSON.stringify(movie.nameRU || movie.nameEN)
         .toLowerCase()
@@ -236,15 +272,15 @@ function App() {
     });
     showNoFoundBlock(results);
     setResultAllMovies(results);
-    localStorage.setItem("resultMovies", JSON.stringify(results));
+    localStorage.setItem('resultMovies', JSON.stringify(results));
   };
 
   // функция для отображеия блока "ничего не найдено"
   const showNoFoundBlock = (movies) => {
     if (movies.length === 0) {
-      setIsVisibleBlock(true);
+      setErrorBlock(true);
     } else {
-      setIsVisibleBlock(false);
+      setErrorBlock(false);
     }
   };
 
@@ -258,13 +294,13 @@ function App() {
       setResultAllMovies(shortMovies);
     } else {
       setIsChecked(!isChecked);
-      setResultAllMovies(JSON.parse(localStorage.getItem("resultMovies")));
+      setResultAllMovies(JSON.parse(localStorage.getItem('resultMovies')));
     }
   };
 
   // функция поиска фильмов из сохраненных
   const handleSearchUserMovie = (inputValue) => {
-    const movies = JSON.parse(localStorage.getItem("userMovies"));
+    const movies = JSON.parse(localStorage.getItem('userMovies'));
     const results = movies.filter((movie) => {
       return JSON.stringify(movie)
         .toLowerCase()
@@ -280,7 +316,7 @@ function App() {
 
   // функция нажатия на иконку сохранения фильма
   const handleClickMovie = (movie) => {
-    const movies = JSON.parse(localStorage.getItem("userMovies"));
+    const movies = JSON.parse(localStorage.getItem('userMovies'));
     const checkedMovie = movies.filter(
       (item) => item.movieId === movie.movieId
     )[0];
@@ -293,48 +329,50 @@ function App() {
 
   // функция сохранения фильмов
 
-  const handleSaveMovie = (item) => {
+  function handleSaveMovie(item) {
     mainApi
       .saveMovie(item)
       .then((movie) => {
-        const moviesUser = JSON.parse(localStorage.getItem("userMovies"));
+        const moviesUser = JSON.parse(localStorage.getItem('userMovies'));
         const newArr = [...moviesUser, { ...movie, id: movie.movieId }];
-        localStorage.setItem("userMovies", JSON.stringify(newArr));
+        localStorage.setItem('userMovies', JSON.stringify(newArr));
         setUserMovies(newArr);
       })
       .catch(() => {
-        setIsOpenPopup(true);
-        setInfoMessage(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+        handleInfoTooltipContent(
+          ErrorIcon,
+          'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'
         );
+        handleInfoTooltipOpen();
       });
     getSavedMovies();
-  };
+  }
 
   // показать сохраненные фильмы из апи
-  const getSavedMovies = () => {
-    setIsloading(true);
+  function getSavedMovies() {
+    setIsPreloader(true);
     mainApi
       .getSavedMovies()
       .then((res) => {
         const movies = res.map((movie) => ({ ...movie, id: movie.movieId }));
-        localStorage.setItem("userMovies", JSON.stringify(movies));
-        setUserMovies(JSON.parse(localStorage.getItem("userMovies")));
+        localStorage.setItem('userMovies', JSON.stringify(movies));
+        setUserMovies(JSON.parse(localStorage.getItem('userMovies')));
       })
       .catch(() => {
-        setIsOpenPopup(true);
-        setInfoMessage(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+        handleInfoTooltipContent(
+          ErrorIcon,
+          'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'
         );
+        handleInfoTooltipOpen();
       })
-      .finally(() => setIsloading(false));
-  };
+      .finally(() => setIsPreloader(false));
+  }
 
   // функция фильтрации по длительности из сохранённых фильмов
   const handleFilterShortUserMovie = () => {
     if (!isChecked) {
       setIsChecked(!isChecked);
-      const movies = JSON.parse(localStorage.getItem("userMovies"));
+      const movies = JSON.parse(localStorage.getItem('userMovies'));
       const shortMovies = movies.filter((movie) => {
         return movie.duration < shortDuration;
       });
@@ -342,13 +380,13 @@ function App() {
     } else {
       setIsChecked(!isChecked);
       getSavedMovies();
-      setUserMovies(JSON.parse(localStorage.getItem("userMovies")));
+      setUserMovies(JSON.parse(localStorage.getItem('userMovies')));
     }
   };
 
   // функция удаления фильма
   const handleRemoveMovie = (film) => {
-    const movies = JSON.parse(localStorage.getItem("userMovies"));
+    const movies = JSON.parse(localStorage.getItem('userMovies'));
     const movie = movies.find(
       (item) => item.id === film.id || item.id === film.movieId
     );
@@ -359,9 +397,9 @@ function App() {
           const newArr = movies.filter((item) => item.movieId !== res.movieId);
           setUserMovies(newArr);
           if (newArr.length === 0) {
-            setIsVisibleBlock(true);
+            setErrorBlock(true);
           } else {
-            setIsVisibleBlock(false);
+            setErrorBlock(false);
           }
         })
         .catch((err) => console.log(err));
@@ -378,59 +416,59 @@ function App() {
             <Footer />
           </Route>
           <Route exact path="/">
-            {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
           </Route>
           <ProtectedRoute
             exact
             path="/movies"
-            loggedIn={isLoggedIn}
+            loggedIn={loggedIn}
             component={Movies}
             movies={resultAllMovies}
             searchFunction={handleSearchMovie}
             saveMovie={handleClickMovie}
             isSavedMovie={isSavedMovie}
-            isLoading={isLoading}
+            isPreloader={isPreloader}
             filter={handleFilterShortMovie}
             isChecked={isChecked}
-            isVisible={isVisibleBlock}
+            isVisible={errorBlock}
           />
           <ProtectedRoute
             exact
             path="/saved-movies"
-            loggedIn={isLoggedIn}
+            loggedIn={loggedIn}
             component={SavedMovies}
             movies={userMovies}
-            isLoading={isLoading}
+            isPreloader={isPreloader}
             removeMovie={handleRemoveMovie}
             searchFunction={handleSearchUserMovie}
             isSavedMovie={isSavedMovie}
             filter={handleFilterShortUserMovie}
             isChecked={isChecked}
-            isVisible={isVisibleBlock}
+            isVisible={errorBlock}
           />
 
           <ProtectedRoute
             exact
             path="/profile"
-            loggedIn={isLoggedIn}
+            loggedIn={loggedIn}
             component={Profile}
             data={currentUser}
-            onLogOut={handleLogOut}
+            onSignOut={handleSignOut}
             onSubmit={handleUpdateUserProfile}
-            isLoading={isLoading}
+            isPreloader={isPreloader}
           />
           <Route exact path="/signin">
-            {isLoggedIn ? (
+            {loggedIn ? (
               <Redirect to="/" />
             ) : (
-              <Login onLogin={handleLogin} isLoading={isLoading} />
+              <Login onLogin={authorization} isPreloader={isPreloader} />
             )}
           </Route>
           <Route exact path="/signup">
-            {isLoggedIn ? (
+            {loggedIn ? (
               <Redirect to="/" />
             ) : (
-              <Register onRegister={handleRegister} isLoading={isLoading} />
+              <Register onRegister={registration} isPreloader={isPreloader} />
             )}
           </Route>
           <Route path="*">
@@ -438,11 +476,12 @@ function App() {
           </Route>
         </Switch>
         <InfoPopup
-          message={infoMessage}
-          isOpen={isOpenPopup}
-          onClose={handleClosePopup}
+          icon={icon}
+          message={message}
+          isOpen={isTooltipOpen}
+          onClose={handleInfoTooltipClose}
         />
-        <Preloader isLoading={isLoading} />
+        <Preloader isPreloader={isPreloader} />
       </div>
     </CurrentUserContext.Provider>
   );

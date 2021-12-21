@@ -4,7 +4,7 @@ import "./Preloader.css";
 const Preloader = (props) => {
   return (
     <>
-      {props.isLoading ? (
+      {props.isPreloader ? (
         <div className="preloader">
           <div className="preloader__container">
             <span className="preloader__round"></span>

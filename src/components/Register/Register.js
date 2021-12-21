@@ -23,7 +23,7 @@ function Register(props) {
       <Form
         onSubmit={register}
         isValid={isValid}
-        isLoading={props.isLoading}
+        isPreloader={props.isPreloader}
         name="register"
         title="Добро пожаловать"
         ariaLabel="Зарегистрироваться"

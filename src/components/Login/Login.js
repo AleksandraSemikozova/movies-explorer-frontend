@@ -29,7 +29,7 @@ function Login(props) {
         linkText="Регистрация"
         onSubmit={login}
         isValid={isValid}
-        isLoading={props.isLoading}>
+        isPreloader={props.isPreloader}>
         <label className="form__input-label">
           E-mail
           <input
