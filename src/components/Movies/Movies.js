@@ -3,12 +3,21 @@ import Footer from "../Footer/Footer";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 
-function Movies() {
+function Movies(props) {
   return (
     <>
-      <Header />
-      <SearchForm />
-      <MoviesCardList />
+      <Header loggedIn={props.loggedIn} />
+      <SearchForm
+        searchFunction={props.searchFunction}
+        filter={props.filter}
+        isChecked={props.isChecked}
+      />
+      <MoviesCardList
+        dataMovies={props.movies}
+        saveMovie={props.saveMovie}
+        isSavedMovie={props.isSavedMovie}
+        isAllMovies={true}
+      />
       <Footer />
     </>
   );

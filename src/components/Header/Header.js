@@ -9,7 +9,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 
 function Header(props) {
   const { pathname } = useLocation();
-  const [loggedIn, setLoggedIn] = useState(true);
+
   const isMobile = useIsMobile();
 
   return (
@@ -21,9 +21,9 @@ function Header(props) {
           </Link>
         </div>
         <div className="header__wrap-nav">
-          <Navigation />
+          <Navigation loggedIn={props.loggedIn} />
         </div>
-        {isMobile && <MobileMenu loggedIn={loggedIn} />}
+        {isMobile && <MobileMenu loggedIn={props.loggedIn} />}
       </div>
     </header>
   );

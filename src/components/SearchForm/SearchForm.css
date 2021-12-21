@@ -50,3 +50,7 @@
   cursor: pointer;
   transform: scale(1.2);
 }
+
+.search-movies__item-error {
+  color: red;
+}

@@ -36,6 +36,10 @@
   max-height: 200px;
 }
 
+.movie__trailer-link {
+  text-decoration: none;
+}
+
 .movie__save-btn {
   margin: 18px auto;
   width: 100px;

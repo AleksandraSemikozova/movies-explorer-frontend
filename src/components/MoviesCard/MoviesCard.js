@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MoviesCard.css";
-import { useLocation } from "react-router";
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie }) {
+function MoviesCard(props) {
   const { pathname } = useLocation();
 
   const [isSaved, setIsSaved] = useState();
@@ -11,7 +10,7 @@ function MoviesCard({ movie }) {
   const movieSavedButtonClassName = `movie__save-btn ${
     isSaved ? "movie__save-btn_saved" : ""
   }
-  
+
     ${pathname === "/saved-movies" ? "movie__remove-btn" : ""}`;
 
   const movieButtonTextClassName = `movie__save-btn-text ${
@@ -19,22 +18,34 @@ function MoviesCard({ movie }) {
   }
   ${pathname === "/saved-movies" ? "movie__save-btn-text_saved" : ""}`;
 
-  function handleSaved() {
-    if (!isSaved) {
-      setIsSaved(true);
-    } else {
-      setIsSaved(false);
-    }
+  const film = props.dataFilm;
+
+  function handleRemove() {
+    props.removeMovie(film);
   }
+
+  function handleSave() {
+    props.onSave(film);
+  }
+
+  const duration = (mins) => {
+    let hours = Math.trunc(mins / 60);
+    let minutes = mins % 60;
+    return hours + "ч " + minutes + "м";
+  };
 
   return (
     <li className="movie">
       <div className="movie__description">
-        <p className="movie__title">{movie.nameRu}</p>
-        <p className="movie__duration">{movie.duration}</p>
+        <p className="movie__title">{film.nameRu}</p>
+        <p className="movie__duration">{duration(film.duration)}</p>
       </div>
-      <img className="movie__img" src={movie.image} alt={movie.nameRu} />
-      <button className={movieSavedButtonClassName} onClick={handleSaved}>
+      <a href={film.trailer} target="_blank" className="movie__trailer-link">
+        <img className="movie__img" src={film.image} alt={film.nameRu} />
+      </a>
+      <button
+        className={movieSavedButtonClassName}
+        onClick={props.isAllMovies ? handleSave : handleRemove}>
         <span className={movieButtonTextClassName}>{textButton}</span>
       </button>
     </li>
