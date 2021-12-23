@@ -259,9 +259,16 @@ function App() {
     setErrorBlock(false);
     const movies = JSON.parse(localStorage.getItem('movies'));
     const results = movies.filter((movie) => {
-      return JSON.stringify(movie.nameRU || movie.nameEN)
-        .toLowerCase()
-        .includes(inputValue.toLowerCase());
+      const searchResult =
+        JSON.stringify(movie.nameRU)
+          .toLowerCase()
+          .includes(inputValue.toLowerCase()) ||
+        JSON.stringify(movie.nameEN)
+          .toLowerCase()
+          .includes(inputValue.toLowerCase());
+      if (searchResult) {
+        return searchResult;
+      }
     });
     showNoFoundBlock(results);
     setResultAllMovies(results);
