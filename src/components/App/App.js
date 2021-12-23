@@ -426,6 +426,7 @@ function App() {
             movies={resultAllMovies}
             searchFunction={handleSearchMovie}
             saveMovie={handleClickMovie}
+            removeMovie={handleRemoveMovie}
             isSavedMovie={isSavedMovie}
             isPreloader={isPreloader}
             filter={handleFilterShortMovie}
