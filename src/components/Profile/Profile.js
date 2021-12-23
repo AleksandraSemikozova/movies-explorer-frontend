@@ -1,14 +1,13 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
-import Form from "../Form/Form";
-import Header from "../Header/Header";
-import "./Profile.css";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import useFormWithValidation from "../../hooks/useFormValidation";
+import React from 'react';
+import { useEffect, useContext } from 'react';
+import Form from '../Form/Form';
+import Header from '../Header/Header';
+import './Profile.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import useFormWithValidation from '../../hooks/useFormValidation';
 
 function Profile(props) {
-  const { values, setValues, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation();
+  const { values, setValues, handleChange, errors } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -28,6 +27,7 @@ function Profile(props) {
       <Header loggedIn={props.loggedIn} />
       <section className="profile">
         <Form
+          click={props.onSignOut}
           isPreloader={props.isPreloader}
           onSubmit={updateProfile}
           name="profile"
@@ -50,7 +50,7 @@ function Profile(props) {
               onChange={handleChange}
             />
             <span className="form__item-error name-item-error">
-              {errors.name || ""}
+              {errors.name || ''}
             </span>
           </label>
           <label className="form__input-label_profile">
@@ -65,7 +65,7 @@ function Profile(props) {
               onChange={handleChange}
             />
             <span className="form__item-error email-item-error">
-              {errors.email || ""}
+              {errors.email || ''}
             </span>
           </label>
         </Form>

@@ -33,18 +33,18 @@ function App() {
     name: '',
     email: '',
   });
+  const [loggedIn, setLoggedIn] = useState();
   const [userMovies, setUserMovies] = useState([]);
   const [resultAllMovies, setResultAllMovies] = useState([]);
-  const [loggedIn, setLoggedIn] = useState();
-  const [isPreloader, setIsPreloader] = useState(false);
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [errorBlock, setErrorBlock] = useState(false);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const [message, setMessage] = React.useState([]);
   const [icon, setIcon] = useState([]);
+  const [isPreloader, setIsPreloader] = useState(false);
 
   const history = useHistory();
-  const locationPath = useLocation();
+  const pathname = useLocation();
 
   useEffect(() => {
     setIsPreloader(true);
@@ -76,6 +76,13 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (loggedIn) {
+      getApiMovies();
+      getSavedMovies();
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
       mainApi
@@ -83,7 +90,7 @@ function App() {
         .then((data) => {
           if (data.email) {
             setLoggedIn(true);
-            history.push(locationPath.pathname);
+            history.push(pathname.pathname);
           }
         })
         .catch((res) => {
@@ -93,13 +100,6 @@ function App() {
         });
     }
   }, [history]);
-
-  useEffect(() => {
-    if (loggedIn) {
-      getApiMovies();
-      getSavedMovies();
-    }
-  }, [loggedIn]);
 
   function handleInfoTooltipOpen() {
     setIsTooltipOpen(true);
@@ -159,7 +159,7 @@ function App() {
       .authorize({ email, password })
       .then((res) => {
         setLoggedIn(true);
-        localStorage.setItem('jwt', res.token);
+        localStorage.setItem('jwt', res);
         history.push('/movies');
         return res;
       })
@@ -200,7 +200,7 @@ function App() {
 
         handleInfoTooltipContent(OkIcon, 'Данные успешно обновлены');
         handleInfoTooltipOpen();
-        setTimeout(history.push, 3000, '/sign-in');
+
         setTimeout(handleInfoTooltipClose, 2500);
       })
       .catch(() => {
@@ -216,7 +216,7 @@ function App() {
 
   const handleSignOut = () => {
     setLoggedIn(false);
-    localStorage.removeItem('jwt');
+    localStorage.clear();
     setResultAllMovies([]);
     setUserMovies([]);
     history.push('/signin');
@@ -295,9 +295,16 @@ function App() {
   const handleSearchUserMovie = (inputValue) => {
     const movies = JSON.parse(localStorage.getItem('userMovies'));
     const results = movies.filter((movie) => {
-      return JSON.stringify(movie)
-        .toLowerCase()
-        .includes(inputValue.toLowerCase());
+      const searchResult =
+        JSON.stringify(movie.nameRU)
+          .toLowerCase()
+          .includes(inputValue.toLowerCase()) ||
+        JSON.stringify(movie.nameEN)
+          .toLowerCase()
+          .includes(inputValue.toLowerCase());
+      if (searchResult) {
+        return searchResult;
+      }
     });
     setUserMovies(results);
     showNoFoundBlock(results);
@@ -387,7 +394,7 @@ function App() {
       mainApi
         .deleteMovie(movie._id)
         .then((res) => {
-          const newArr = movies.filter((item) => item.movieId !== res.movieId);
+          const newArr = movies.filter((item) => item._id !== movie._id);
           setUserMovies(newArr);
           if (newArr.length === 0) {
             setErrorBlock(true);
@@ -404,12 +411,12 @@ function App() {
       <div className="page">
         <Switch>
           <Route exact path="/">
-            <Header />
+            <Header loggedIn={loggedIn} />
             <Main />
             <Footer />
           </Route>
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
           </Route>
           <ProtectedRoute
             exact

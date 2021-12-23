@@ -1,10 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
-import "./Form.css";
-import useFormWithValidation from "../../hooks/useFormValidation.js";
+import { Link } from 'react-router-dom';
+import './Form.css';
+import useFormWithValidation from '../../hooks/useFormValidation.js';
 
 function Form(props) {
   const { values, handleChange, errors, isValid } = useFormWithValidation();
-  const { pathname } = useLocation();
 
   return (
     <section className="form">
@@ -16,6 +15,7 @@ function Form(props) {
         action="#"
         name={props.name}
         onSubmit={props.onSubmit}
+        onSignOut={props.onSignOut}
         className="form__container">
         <div>
           <fieldset className="form__input-container">
@@ -28,13 +28,14 @@ function Form(props) {
             aria-label={props.ariaLabel}
             className={`form__submit-btn form__submit-btn_${props.name}
             form__submit-btn ${
-              props.isValid ? "" : "form__submit-btn_disabled"
+              props.isValid ? '' : 'form__submit-btn_disabled'
             }`}>
             {props.buttonText}
           </button>
           <p className="form__text">
             {props.formText}
             <Link
+              onClick={props.click}
               className={`form__link form__link_${props.name}`}
               to={props.linkPath}>
               {props.linkText}

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import {
-  moviesCountMobile,
-  moviesCountTablet,
-  moviesCountDesktop,
-  moviesCountMore,
-  moviesCountMoreDesktop,
+  moviesWithMobile,
+  moviesWithTablet,
+  moviesWithDesktop,
+  moviesShowMore,
+  moviesShowMoreDesktop,
   windowWidthDesktop,
   windowWidthTablet,
   windowWidthMobile,
@@ -32,15 +32,15 @@ function MoviesCardList(props) {
   useEffect(() => {
     if (props.isAllMovies) {
       if (width >= windowWidthDesktop) {
-        setMoviesCount(moviesCountDesktop);
-        setMoreMoviesCount(moviesCountMoreDesktop);
+        setMoviesCount(moviesWithDesktop);
+        setMoreMoviesCount(moviesShowMoreDesktop);
       }
       if (width < windowWidthDesktop && width >= windowWidthTablet) {
-        setMoviesCount(moviesCountTablet);
-        setMoreMoviesCount(moviesCountMore);
+        setMoviesCount(moviesWithTablet);
+        setMoreMoviesCount(moviesShowMore);
       } else if (width >= windowWidthMobile && width < windowWidthTablet) {
-        setMoviesCount(moviesCountMobile);
-        setMoreMoviesCount(moviesCountMore);
+        setMoviesCount(moviesWithMobile);
+        setMoreMoviesCount(moviesShowMore);
       }
     } else {
       setMoviesCount(props.dataMovies.length + 1);
