@@ -1,3 +1,9 @@
+# Сервер
+
+- Публичный IP-адрес сервера: 51.250.30.227
+- Домен сервера: https://api.mesto.semikozova.nomoredomains.rocks
+- Размещение фронтенда на сервере: https://mesto.semikozova.nomoredomains.rocks
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
