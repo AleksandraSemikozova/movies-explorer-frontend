@@ -36,7 +36,8 @@ function Profile(props) {
           ariaLabel="Редактировать профиль"
           buttonText="Редактировать"
           linkPath="/signin"
-          linkText="Выйти из аккаунта">
+          linkText="Выйти из аккаунта"
+        >
           <label className="form__input-label_profile">
             Имя
             <input

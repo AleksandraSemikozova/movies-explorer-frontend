@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
+import React, { useState, useEffect } from "react";
+import "./MoviesCardList.css";
+import MoviesCard from "../MoviesCard/MoviesCard";
 import {
   moviesCountMobile,
   moviesCountTablet,
@@ -10,7 +10,7 @@ import {
   windowWidthDesktop,
   windowWidthTablet,
   windowWidthMobile,
-} from '../../utils/constants';
+} from "../../utils/constants";
 
 function MoviesCardList(props) {
   const [moviesCount, setMoviesCount] = useState(0);
@@ -23,15 +23,18 @@ function MoviesCardList(props) {
 
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResizeWindow);
+    window.addEventListener("resize", handleResizeWindow);
     return () => {
-      window.removeEventListener('resize', handleResizeWindow);
+      window.removeEventListener("resize", handleResizeWindow);
     };
   }, []);
 
   useEffect(() => {
+    console.log("props", props);
     if (props.isAllMovies) {
+      console.log("props.isAllMovies");
       if (width >= windowWidthDesktop) {
+        console.log("width >= windowWidthDesktop");
         setMoviesCount(moviesCountDesktop);
         setMoreMoviesCount(moviesCountMoreDesktop);
       }
@@ -58,6 +61,7 @@ function MoviesCardList(props) {
             isSaved={props.isSavedMovie(item)}
             removeMovie={props.removeMovie}
             isAllMovies={props.isAllMovies}
+            isSavedMoviesList={props.isSavedMoviesList}
           />
         ))}
       </ul>
@@ -66,7 +70,8 @@ function MoviesCardList(props) {
           type="button"
           aria-label="Показать больше"
           className="movies__show-more-btn"
-          onClick={getMoreMovies}>
+          onClick={getMoreMovies}
+        >
           Ещё
         </button>
       )}
