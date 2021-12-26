@@ -309,9 +309,16 @@ function App() {
   const handleSearchUserMovie = (inputValue) => {
     const movies = JSON.parse(localStorage.getItem("userMovies")) || [];
     const results = movies.filter((movie) => {
-      return JSON.stringify(movie)
-        .toLowerCase()
-        .includes(inputValue.toLowerCase());
+      const searchResult =
+        JSON.stringify(movie.nameRU)
+          .toLowerCase()
+          .includes(inputValue.toLowerCase()) ||
+        JSON.stringify(movie.nameEN)
+          .toLowerCase()
+          .includes(inputValue.toLowerCase());
+      if (searchResult) {
+        return searchResult;
+      }
     });
     setUserMovies(results);
     showNoFoundBlock(results);
