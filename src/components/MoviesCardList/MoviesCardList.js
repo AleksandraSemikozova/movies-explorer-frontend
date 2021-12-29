@@ -58,6 +58,7 @@ function MoviesCardList(props) {
             isSaved={props.isSavedMovie(item)}
             removeMovie={props.removeMovie}
             isAllMovies={props.isAllMovies}
+            isSavedMoviesList={props.isSavedMoviesList}
           />
         ))}
       </ul>

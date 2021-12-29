@@ -48,7 +48,7 @@ function MoviesCard(props) {
       </a>
       <button
         className={movieSavedButtonClassName}
-        onClick={props.isSaved ? handleRemove : handleSave}>
+        onClick={!props.isSavedMoviesList ? handleSave : handleRemove}>
         <span className={movieButtonTextClassName}>{textButton}</span>
       </button>
     </li>

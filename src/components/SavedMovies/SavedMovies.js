@@ -3,8 +3,14 @@ import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import React, { useEffect } from 'react';
 
 function SavedMovies(props) {
+  useEffect(() => {
+    const movies = JSON.parse(localStorage.getItem('userMovies')) || [];
+    props.setMovies(movies);
+  }, []);
+
   return (
     <>
       <Header loggedIn={props.loggedIn} />
@@ -18,7 +24,8 @@ function SavedMovies(props) {
         dataMovies={props.movies}
         isSavedMovie={props.isSavedMovie}
         removeMovie={props.removeMovie}
-        isAllMovies={true}
+        isAllMovies={false}
+        isSavedMoviesList={true}
       />
       {props.isVisible && props.movies.length === 0 && (
         <p className="saved-movies__error-block">Ничего не найдено</p>

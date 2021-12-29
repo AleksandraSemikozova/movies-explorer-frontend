@@ -1,9 +1,9 @@
-import React from "react";
-import Form from "../Form/Form";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../../images/logo.svg";
-import "./Register.css";
-import useFormWithValidation from "../../hooks/useFormValidation";
+import React from 'react';
+import Form from '../Form/Form';
+import { Link, useLocation } from 'react-router-dom';
+import logo from '../../images/logo.svg';
+import './Register.css';
+import useFormWithValidation from '../../hooks/useFormValidation';
 
 function Register(props) {
   const pathname = useLocation();
@@ -39,12 +39,13 @@ function Register(props) {
             name="name"
             minLength="2"
             pattern="[а-яА-Яa-zA-ZёË\- ]{2,}"
-            value={values.name || ""}
+            value={values.name || ''}
             onChange={handleChange}
+            disabled={props.isSaving}
             required
           />
           <span className="form__item-error name-item-error">
-            {errors.name || ""}
+            {errors.name || ''}
           </span>
         </label>
         <label className="form__input-label">
@@ -55,32 +56,34 @@ function Register(props) {
             name="email"
             required
             pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$"
-            value={values.email || ""}
+            value={values.email || ''}
             onChange={handleChange}
+            disabled={props.isSaving}
           />
           <span className="form__item-error email-item-error">
-            {errors.email || ""}
+            {errors.email || ''}
           </span>
         </label>
         <label
           className={`form__input-label form__input-label_${props.name}
               ${
-                pathname === "/profile"
-                  ? "form__input-label_profile_invisible"
-                  : ""
+                pathname === '/profile'
+                  ? 'form__input-label_profile_invisible'
+                  : ''
               }`}>
           Пароль
           <input
             type="password"
             className={`form__input-item form__input-item_${props.name}`}
             name="password"
-            value={values.password || ""}
+            value={values.password || ''}
             onChange={handleChange}
             required
             minLength="8"
+            disabled={props.isSaving}
           />
           <span className="form__item-error password-error">
-            {errors.password || ""}
+            {errors.password || ''}
           </span>
         </label>
       </Form>

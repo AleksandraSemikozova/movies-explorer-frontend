@@ -93,6 +93,10 @@
   border: none;
 }
 
+.form__button-container {
+  margin: 0 auto;
+}
+
 .form__submit-btn {
   width: 100%;
   background: #2be080;
@@ -108,16 +112,21 @@
   transition: opacity linear 0.4s;
 }
 
+.form__submit-btn_disabled {
+  color: grey;
+  background-color: #2be07f4f;
+  border: 1px solid #2be080;
+  pointer-events: none;
+}
+
 .form__submit-btn_profile {
+  width: 150px;
   height: 16px;
   font-weight: 400;
   font-size: 13px;
   color: black;
+  border: none;
   background: rgba(0, 0, 0, 0);
-}
-
-.form__submit-btn_disabled {
-  background-color: grey;
 }
 
 .form__submit-btn:hover {

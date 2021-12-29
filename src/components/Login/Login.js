@@ -40,6 +40,7 @@ function Login(props) {
             pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$"
             value={values.email || ''}
             onChange={handleChange}
+            disabled={props.isSaving}
           />
           <span className="form__item-error email-item-error">
             {errors.email || ''}
@@ -55,6 +56,7 @@ function Login(props) {
             onChange={handleChange}
             required
             minLength="8"
+            disabled={props.isSaving}
           />
           <span className="form__item-error password-error">
             {errors.password || ''}

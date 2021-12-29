@@ -26,9 +26,9 @@ function Form(props) {
           <button
             type="submit"
             aria-label={props.ariaLabel}
-            className={`form__submit-btn form__submit-btn_${props.name}
+            className={`form__submit-btn form__submit-btn_${props.name} 
             form__submit-btn ${
-              props.isValid ? '' : 'form__submit-btn_disabled'
+              props.isValid ? 'form__submit-btn' : 'form__submit-btn_disabled'
             }`}>
             {props.buttonText}
           </button>

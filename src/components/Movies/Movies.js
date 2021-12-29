@@ -16,9 +16,9 @@ function Movies(props) {
       <MoviesCardList
         dataMovies={props.movies}
         saveMovie={props.saveMovie}
-        removeMovie={props.removeMovie}
         isSavedMovie={props.isSavedMovie}
         isAllMovies={true}
+        isSavedMoviesList={false}
       />
       {props.isVisible && props.movies.length === 0 && (
         <p className="movies__error-block">Ничего не найдено</p>
