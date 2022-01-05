@@ -42,11 +42,15 @@
   width: 34px;
   height: 34px;
   border: none;
-  background: #2be080 url("../../images/icon-search-btn.svg") no-repeat center;
+  background: #2be080 url('../../images/icon-search-btn.svg') no-repeat center;
   transition: transform linear 0.5s;
 }
 
 .search-movies__btn:hover {
   cursor: pointer;
   transform: scale(1.2);
+}
+
+.search-movies__item-error {
+  color: red;
 }

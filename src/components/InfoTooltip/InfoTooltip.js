@@ -1,14 +1,20 @@
-import "./InfoTooltip.css";
+import './InfoTooltip.css';
 
 function InfoTooltip(props) {
   return (
     <section
       className={`info-tooltip__popup
-    ${props.isOpen ? "info-tooltip__popup_opened" : ""} `}>
+    ${props.isOpen ? 'info-tooltip__popup_opened' : ''} `}>
       <div className="info-tooltip__container">
-        <button className="info-tooltip__close-icon"></button>
-        <img alt="Иконка результата" className="info-tooltip__result-icon" />
-        <h2 className="info-tooltip__result-title">{props.title}</h2>
+        <button
+          className="info-tooltip__close-icon"
+          onClick={props.onClose}></button>
+        <img
+          alt="Иконка результата"
+          className="info-tooltip__result-icon"
+          src={props.icon}
+        />
+        <h2 className="info-tooltip__result-title">{props.message}</h2>
       </div>
     </section>
   );

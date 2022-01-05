@@ -1,0 +1,5 @@
+.saved-movies__error-block {
+  display: flex;
+  justify-content: center;
+  margin: 70px 0;
+}

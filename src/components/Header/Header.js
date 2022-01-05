@@ -1,15 +1,12 @@
-import React from "react";
-import logo from "../../images/logo.svg";
-import "./Header.css";
-import Navigation from "../Navigation/Navigation";
-import MobileMenu from "../MobileMenu/MobileMenu";
-import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
-import { useIsMobile } from "../../hooks/useIsMobile";
+import React from 'react';
+import logo from '../../images/logo.svg';
+import './Header.css';
+import Navigation from '../Navigation/Navigation';
+import MobileMenu from '../MobileMenu/MobileMenu';
+import { Link } from 'react-router-dom';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 function Header(props) {
-  const { pathname } = useLocation();
-  const [loggedIn, setLoggedIn] = useState(true);
   const isMobile = useIsMobile();
 
   return (
@@ -21,9 +18,9 @@ function Header(props) {
           </Link>
         </div>
         <div className="header__wrap-nav">
-          <Navigation />
+          <Navigation loggedIn={props.loggedIn} />
         </div>
-        {isMobile && <MobileMenu loggedIn={loggedIn} />}
+        {isMobile && <MobileMenu loggedIn={props.loggedIn} />}
       </div>
     </header>
   );
